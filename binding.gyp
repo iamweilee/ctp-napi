@@ -18,9 +18,9 @@
         'SafeQueue.h'
       ],
       "libraries": [
-        "../thosttraderapi.so", "../thostmduserapi.so"
+        "./ctpapi/tradeapi_linux64/thosttraderapi.so", "./ctpapi/tradeapi_linux64/thostmduserapi.so"
       ],
-      'include_dirs': ["./tradeapi/", "<!@(node -p \"require('node-addon-api').include\")"],
+      'include_dirs': ["./ctpapi/", "<!@(node -p \"require('node-addon-api').include\")"],
       'dependencies': ["<!(node -p \"require('node-addon-api').gyp\")"],
       'defines': [ 'NAPI_CPP_EXCEPTIONS' ],
       'cflags!': [ '-fno-exceptions' ],
