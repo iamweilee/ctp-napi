@@ -1,13 +1,12 @@
 # ctp-napi
 基于N-api写的 node 扩展, 用于期货ctp的交易和行情.
 
-`$ git clone git@github.com:charmer1989/ctp-napi.git && cd ctp-napi`
+`$ git clone https://github.com/iamweilee/ctp-napi.git && cd ctp-napi`
 
 `$ npm i`
 
 `$ node-gyp rebuild`
 
-`$ cp *.so ../`
 ##### 先修改测试脚本中的账户密码等参数, 然后
 `$ node try-mduser.js`
 
