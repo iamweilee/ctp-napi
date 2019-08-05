@@ -1,5 +1,5 @@
 {
-  'targets': [
+  "targets": [
     {
       'target_name': 'ctp-napi',
       'sources': [
@@ -17,21 +17,35 @@
         'Struct.h',
         'SafeQueue.h'
       ],
-      "libraries": [
-        "./ctpapi/tradeapi_linux64/thosttraderapi.so", "./ctpapi/tradeapi_linux64/thostmduserapi.so"
+      "conditions": [
+        ["OS=='linux'", {
+          "libraries":["$(CURDIR)/ctpapi/20190305/tradeapi_linux64/thostmduserapi.so", "$(CURDIR)/ctpapi/20190305/tradeapi_linux64/thosttraderapi.so"],
+          "include_dirs":["./ctpapi/20190305/tradeapi_linux64", "<!@(node -p \"require('node-addon-api').include\")"]
+        }],
+        ["OS=='win'", {
+          "conditions": [
+            ["target_arch=='ia32'", {
+              "libraries":["./ctpapi/20190305/tradeapi_windows32/thostmduserapi.lib", "./ctpapi/20190305/tradeapi_windows32/thosttraderapi.lib"],
+              "include_dirs":["./ctpapi/20190305/tradeapi_windows32", "<!@(node -p \"require('node-addon-api').include\")"],
+              "dependencies": ["<!(node -p \"require('node-addon-api').gyp\")"],
+            }, { # target_arch=="x64"
+              "libraries":["./ctpapi/20190305/tradeapi_windows64/thostmduserapi.lib", "./ctpapi/20190305/tradeapi_windows64/thosttraderapi.lib"],
+              "include_dirs":["./ctpapi/20190305/tradeapi_windows64", "<!@(node -p \"require('node-addon-api').include\")"]
+            }]
+          ]
+        }]
       ],
-      'include_dirs': ["./ctpapi/", "<!@(node -p \"require('node-addon-api').include\")"],
-      'dependencies': ["<!(node -p \"require('node-addon-api').gyp\")"],
-      'defines': [ 'NAPI_CPP_EXCEPTIONS' ],
-      'cflags!': [ '-fno-exceptions' ],
-      'cflags_cc!': [ '-fno-exceptions' ],
-      'msvs_settings': {
-        'VCCLCompilerTool': { 'ExceptionHandling': 1 },
+      "dependencies": ["<!(node -p \"require('node-addon-api').gyp\")"],
+      "defines": [ "NAPI_CPP_EXCEPTIONS" ],
+      "cflags!": [ "-fno-exceptions" ],
+      "cflags_cc!": [ "-fno-exceptions" ],
+      "msvs_settings": {
+        "VCCLCompilerTool": { "ExceptionHandling": 1 },
       },
-      'xcode_settings': {
-        'CLANG_CXX_LIBRARY': 'libc++',
-        'MACOSX_DEPLOYMENT_TARGET': '10.7',
-        'GCC_ENABLE_CPP_EXCEPTIONS': 'YES',
+      "xcode_settings": {
+        "CLANG_CXX_LIBRARY": "libc++",
+        "MACOSX_DEPLOYMENT_TARGET": "10.7",
+        "GCC_ENABLE_CPP_EXCEPTIONS": "YES",
       },
     }
   ]
